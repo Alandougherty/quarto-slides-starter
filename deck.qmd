@@ -11,9 +11,11 @@ format:
     margin: 0.02     # viewport fraction kept empty around the deck (uniform only)
     max-scale: 9.9   # unclamp scaling so large displays fill (default caps at 2x)
     slide-number: true
-    # embed-resources: true   # turn on (or pass -M embed-resources:true)
-    #                         # for the DELIVERY render: one portable html
-    #                         # file, no *_files/ dependency. See README.
+    # embed-resources: true   # turn on (or pass -M embed-resources:true to
+    #                         # `quarto render` with NO filename: a project
+    #                         # render, which keeps freeze working) for the
+    #                         # DELIVERY render: one portable html file, no
+    #                         # *_files/ dependency. See README.
     # footer: "Course or event name"
     # NOTE: the footer is viewport chrome living in the margin zone. With
     # margin below ~0.04, bottom-heavy slides can collide with it. Either
@@ -52,7 +54,7 @@ print("code blocks style via the theme")
 
 <!--
 Decorative background animation: attach a self-contained CSS-animation
-page to a slide with {background-iframe="assets/animation.html"} — see
+page to a slide with {background-iframe="assets/animation.html"}; see
 the README section "Decorative background animation" and the working
 example in examples/keynote/. Reserve background-video for content
 footage.

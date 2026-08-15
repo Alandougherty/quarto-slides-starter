@@ -1,12 +1,11 @@
 # quarto-slides-starter
 
 A starting point for Quarto RevealJS slide decks that fullscreen correctly,
-print correctly, and stay that way. The settings in `deck.qmd` are the
-product of a long debugging session; the rules below are why they work.
+print correctly, and stay that way. The settings in `deck.qmd` were
+established by debugging real decks; the rules below are why they work.
 
 This README is written to be followed by a human or by an AI assistant
-working on a deck. Treat the rules as constraints, not suggestions: they
-encode failures already paid for once.
+working on a deck. Treat the rules as constraints, not suggestions.
 
 ## Quick start
 
@@ -15,7 +14,8 @@ encode failures already paid for once.
 2. Edit `deck.qmd`. Preview with:
    `quarto preview deck.qmd --port 4200 --no-browser`
    (add `--host 0.0.0.0` to view from another machine on your network).
-3. Export to PDF with `./export.sh <url> <out.pdf>` (decktape; recommended).
+3. Export to PDF with `./export.sh <url> <out.pdf>` (decktape; recommended;
+   run it with the preview from step 2 still serving).
 
 The repo root is a standard Quarto project (`_quarto.yml` beside
 `deck.qmd`), the same shape as the example, so everything said about the
@@ -30,7 +30,11 @@ honoured only by project renders.
 When it is time to actually present, render (Quarto's word for export) the
 deck as ONE self-contained HTML file:
 
-    quarto render deck.qmd -M embed-resources:true
+    quarto render -M embed-resources:true
+
+Note the command names no file: a project render respects the render list
+in `_quarto.yml` (only `deck.qmd`) and keeps `freeze` honoured once the
+deck gains executable code (rule 7).
 
 This inlines every stylesheet, script, image and video into a single
 `.html` you can put on a USB stick, email, or open on the venue machine
@@ -59,7 +63,7 @@ deprecated old name for the same option.
 On Linux, substitute your package manager; Quarto and Node are the only
 hard requirements for the core loop (edit, preview, export).
 
-## The sizing model (read this once, save hours)
+## The sizing model
 
 RevealJS does not reflow slides. It lays every slide out on a fixed
 authored canvas (`width` x `height`) and scales that whole canvas with a
@@ -104,11 +108,12 @@ canvas's is geometry, not a bug. Live with it or change the canvas.
    and the first slide heading (even an HTML comment) becomes an invisible
    blank slide and shifts every slide index. Put header comments inside
    the first slide.
-7. **Never commit render artefacts** (`.quarto/`, `*_files/`, `*.html`) —
+7. **Never commit render artefacts** (`.quarto/`, `*_files/`, `*.html`):
    the `.gitignore` here already excludes them. Source-HTML assets (such
    as a `background-iframe` animation page under `assets/`) are inputs,
-   not render output: they must be tracked, and the `.gitignore` carries
-   a negation rule for them. The example's `_freeze/` store is also
+   not render output; they must be tracked, and the `.gitignore` carries
+   negation rules covering root `assets/` and the examples. The
+   example's `_freeze/` store is also
    committed deliberately: it holds executed figure results so a
    re-render needs no Python, which makes it an input in this rule's
    sense, not a render artefact. Note that `freeze` only applies to
@@ -139,15 +144,17 @@ and the example share the same shape.
 - `themes/plain.scss`: commented scaffold, documented variables only.
 - `themes/catppuccin-hku.scss`: Catppuccin Latte, as used for HKU
   COMP1117 decks.
+- `themes/editing-guide.scss`: editing aid only; draws a dashed,
+  layout-inert outline at the true canvas edge (rule 5).
 
-Swap via the `theme:` list in `deck.qmd`. Both contain zero structural
-rules by design; see rule 1 before adding any.
+Swap via the `theme:` list in `deck.qmd`. The two colour themes contain
+zero structural rules by design; see rule 1 before adding any.
 
 ## Decorative background animation
 
 Ambient background animation (drifting glows, gradients) needs no video
 and no JavaScript. Put the animation in a small self-contained HTML page
-— CSS `@keyframes` on blurred gradient elements, a few KB — and attach
+(CSS `@keyframes` on blurred gradient elements, a few KB) and attach
 it to a slide with the documented attribute:
 
     ## {background-iframe="assets/animation.html"}
@@ -165,7 +172,7 @@ Practical notes:
   decorative animation to video loses seamless looping, resolution
   independence and reduced-motion support, and adds autoplay risk.
 - Screenshot and PDF export freeze the iframe at a frame (verified
-  working with decktape and headless Chrome).
+  with decktape export and headless-Chrome screenshots).
 - `embed-resources` does NOT inline iframes: a single-file delivery
   render must either ship the assets folder alongside, or swap the
   attribute for `background-image="assets/animation-static.png"`.
@@ -173,8 +180,9 @@ Practical notes:
 ## The example
 
 `examples/keynote/` shows what a full designed deck looks like when it
-is built with documented Quarto features: a dark theme set through Sass
-variables, markdown content, columns and cards, fragments for
+is built almost entirely from documented Quarto features, plus two
+contained extensions (the routes in `CLAUDE.md`): a dark theme set
+through Sass variables, markdown content, columns and cards, fragments for
 progressive reveals, an executable matplotlib figure (with `freeze`, so
 a project render, `quarto render` with no filename, needs no Python;
 see rule 7), pre-rendered background art, and a
