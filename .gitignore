@@ -1,0 +1,12 @@
+.quarto/
+*_files/
+*.html
+# Source-HTML assets (e.g. background-iframe animation pages) are inputs,
+# not render output; keep them tracked despite the *.html rule above.
+!examples/*/assets/*.html
+# The committed _freeze/ store must be COMPLETE: Quarto falls back to
+# executing the notebook if any stored file is missing, which breaks
+# Python-free rendering from a fresh clone.
+!examples/*/_freeze/**/*.html
+
+/.quarto/

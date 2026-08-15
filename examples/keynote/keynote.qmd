@@ -1,0 +1,435 @@
+---
+pagetitle: "Keynote in plain Quarto"
+format:
+  revealjs:
+    theme: [default, themes/keynote-theme.scss]
+    width: 1244
+    height: 700
+    margin: 0.05
+    max-scale: 9.9
+    center: false
+    transition: none
+    controls: true
+    slide-number: c
+    footer: "How the Humble Gaussian · Future Science × HKU"
+---
+
+##  {background-iframe="assets/bokeh.html"}
+
+<!--
+BACKGROUND ANIMATION: the floating blobs are live CSS animation, not
+video. assets/bokeh.html is a self-contained page: ~50 lines of CSS
+keyframes drive 18 absolutely-positioned blurred radial-gradient circles
+(each drifts on a 14-23s transform loop and pulses opacity/scale on a
+6-9.5s loop; negative animation-delays de-sync them, so the ensemble
+never visibly repeats; mix-blend-mode screen merges overlaps into glow).
+The documented background-iframe attribute renders that page as this
+slide's full-bleed background layer, behind the content and with pointer
+events off, so the deck's own markdown stays plain.
+
+Trade-offs of this route: screenshot/PDF export freezes it at a frame
+(verified working); embed-resources does NOT inline iframes, so a
+single-file delivery render needs the assets folder alongside, or swap
+this attribute for background-image="assets/bokeh.png" (the static
+version of the same art). Reserve background-video for content footage;
+decorative motion is better served by CSS like this, which is
+resolution-independent, seamless and a few KB.
+-->
+
+<!--
+A designed keynote built from documented Quarto features only:
+documented options, Sass variables, pandoc divs/spans with typography-only
+and simple-box classes, one executable figure, pre-rendered background art
+attached via the documented background-image attribute. No raw HTML, no
+positioning CSS. The empty ## headings give full control of content order
+on designed slides while staying inside markdown.
+-->
+
+::: {.title-layout}
+
+::: {.layout-top}
+[FUTURE SCIENCE × HKU SUMMER INSTITUTE]{.header-label}
+[Translational AI & Spatial Computing · Turning Data into Real-World Impact]{.header-subtext}
+:::
+
+::: {.layout-middle}
+[A KEYNOTE]{.section-label}
+[How the Humble Gaussian]{.big-title}
+[Taught Machines to [Perceive]{.accent}]{.big-title}
+[From a single blob in statistics to a machine's sense of space]{.subtitle}
+:::
+
+::: {.layout-bottom}
+[Dr. Alan William Dougherty]{.author-name}
+[School of Computing and Data Science · The University of Hong Kong]{.author-affiliation}
+:::
+
+:::
+
+<!-- An empty per-slide footer div suppresses the global footer on this
+hero slide (documented Quarto behaviour: a slide-level .footer overrides
+the deck footer). -->
+::: {.footer}
+:::
+
+##  {background-image="assets/bokeh-dim.png" background-size="cover"}
+
+::: {.title-layout}
+
+::: {.layout-middle}
+:::
+
+::: {.layout-bottom}
+[BEFORE I TELL YOU ANYTHING]{.section-label-gold}
+[Who is this?]{.big-title}
+:::
+
+:::
+
+<!-- Empty per-slide footer: suppresses the global footer here too. -->
+::: {.footer}
+:::
+
+::: {.notes}
+In delivery, splat-refinement footage plays behind this slide via the
+documented background-video attribute.
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[CHAPTER ONE]{.section-label}
+[The question every student asks]{.slide-title}
+
+::: {.spread}
+
+[“Why am I learning this?”]{.big-quote}
+
+::: {.body-text .narrow-text}
+I am going to answer that today, with a story. It starts with a
+[straight line]{.highlight-cyan} and ends with [machines that can hold the world in
+their heads]{.highlight-magenta}: robots, agents, glasses that understand the room you
+are standing in.
+:::
+
+::: {.quote-card}
+The hero of this story was sitting in [chapter two of your statistics
+textbook]{.highlight-amber} the whole time. I will not tell you what it is yet. But you
+have already seen it tonight, thousands of times.
+:::
+
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[CHAPTER FIVE · THE FAMOUS CHARACTER ENTERS]{.section-label}
+[Ladies and gentlemen: the neural network]{.slide-title}
+
+::: {.spread}
+
+:::: {.columns .fill-space}
+
+::: {.column width="50%"}
+::: {.panel-card .card-cyan}
+[Chapter Four's sum]{.card-title}
+a · [1]{.highlight-cyan} + b · [x]{.highlight-cyan} + c · [x²]{.highlight-cyan} + ...
+
+[fixed pieces · tuned coefficients]{.small}
+:::
+:::
+
+::: {.column width="50%"}
+::: {.panel-card .card-magenta}
+[A network layer]{.card-title}
+w₁ · [x₁]{.highlight-magenta} + w₂ · [x₂]{.highlight-magenta} + b, squashed
+
+[learned pieces · squashed so they bend]{.small}
+:::
+:::
+
+::::
+
+::: {.closing-line}
+Look at it. It is chapter three again: a sum of weighted pieces.
+:::
+
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[CHAPTER SEVEN · THE HERO WAS THERE ALL ALONG]{.section-label}
+[The humble Gaussian [(say: GOW-see-an)]{.pronunciation}]{.slide-title}
+
+::: {.spread}
+
+:::: {.columns}
+
+::: {.column width="48%"}
+```{python}
+#| echo: false
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-4, 4, 400)
+y = np.exp(-x**2 / 2)
+
+fig, ax = plt.subplots(figsize=(5.2, 3.1))
+fig.patch.set_alpha(0)
+ax.set_facecolor("none")
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.path import Path as MplPath
+from matplotlib.patches import PathPatch
+cmap = LinearSegmentedColormap.from_list("bell", ["#0b1026", "#46d3ff"])
+grad = np.linspace(0, 1, 256).reshape(-1, 1)
+im = ax.imshow(grad, extent=[-4, 4, 0, 1], origin="lower", aspect="auto",
+               cmap=cmap, alpha=0.55)
+clip = PathPatch(MplPath(list(zip(x, y)) + [(4, 0), (-4, 0)]),
+                 transform=ax.transData, facecolor="none", edgecolor="none")
+ax.add_patch(clip)
+im.set_clip_path(clip)
+ax.plot(x, y, color="#46d3ff", lw=2.5)
+ax.axvline(0, ymax=0.93, color="#c77dff", ls="--", lw=1.5)
+ax.axhline(0, color="#46d3ff", lw=2)
+ax.text(0, -0.16, "mean (where)", ha="center", color="#aab4d4", fontsize=12)
+ax.text(2.3, -0.16, "spread (how wide)", ha="center", color="#aab4d4", fontsize=12)
+ax.set_xlim(-4, 4); ax.set_ylim(-0.05, 1.12)
+ax.axis("off")
+plt.tight_layout()
+plt.show()
+```
+:::
+
+::: {.column width="52%" .body-text}
+You have seen this curve. Exam marks. Heights. Measurement errors. The
+[bell curve]{.highlight-cyan}.
+
+It is just a soft bump: **strong in the middle, fading at the edges**. Two
+numbers describe it, where its centre is and how wide it spreads.
+:::
+
+::::
+
+::: {.quote-card}
+A Gaussian is the simplest way to say: *"something is roughly here, and a
+bit fuzzy around the edges."*
+:::
+
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[CHAPTER EIGHT · THE TRANSFORMATION]{.section-label}
+[Turn the knobs]{.slide-title}
+
+::: {.spread}
+
+:::: {.columns .fill-space}
+
+::: {.column width="25%"}
+::: {.panel-card .card-cyan .fragment}
+[+ position]{.card-title}
+It lives in 3D space.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-magenta .fragment}
+[+ orientation]{.card-title}
+It stretches and tilts: an oriented ellipsoid.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-green .fragment}
+[+ colour]{.card-title}
+It takes on appearance.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-amber .fragment}
+[+ opacity]{.card-title}
+A soft, translucent blob of stuff.
+:::
+:::
+
+::::
+
+::: {.closing-line .fragment}
+This is called a [splat]{.highlight-cyan}. And no new mathematics happened in the last ninety seconds.
+:::
+
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[CHAPTER TEN · ALREADY SHIPPING]{.section-label}
+[The humble bump, shipping]{.slide-title}
+
+::: {.spread}
+
+:::: {.columns .fill-space}
+
+::: {.column width="25%"}
+::: {.panel-card .card-cyan}
+[DJI Terra 5.0]{.card-title}
+Native splat reconstruction in the flagship drone-mapping product. Made in Shenzhen.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-magenta}
+[NVIDIA Isaac Sim 6.0]{.card-title}
+Robots trained inside splat scenes. Paper to industrial product in three years.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-green}
+[RoboSplat · Shanghai AI Lab]{.card-title}
+One human demo becomes thousands of training variations, in splats.
+:::
+:::
+
+::: {.column width="25%"}
+::: {.panel-card .card-amber}
+[Scaniverse · Hyperscape]{.card-title}
+Splat your own room from a phone or headset, today.
+:::
+:::
+
+::::
+
+::: {.closing-line}
+In every one of these, the splat handles [perception]{.highlight-cyan}. A separate system decides.
+:::
+
+:::
+
+##  {background-image="assets/content-bg.png" background-size="cover"}
+
+[YOUR TURN · ABOUT 25 MINUTES]{.section-label-gold}
+[Teach a machine to perceive this space]{.slide-title}
+
+::: {.spread}
+
+::: {.body-text}
+Your group gets an object or a corner of this room. Design, on paper, how
+a machine should perceive it, before you are allowed any AI. The TAs have
+your worksheets.
+:::
+
+:::: {.columns .fill-space}
+
+::: {.column width="33%"}
+::: {.panel-card .card-cyan}
+[① Think first · ~12 min]{.card-title}
+No phones, no AI. Decide what to [measure]{.highlight-cyan}, from where,
+what to [store]{.highlight-cyan}, how to [rebuild]{.highlight-cyan} it,
+and what makes it hard.
+:::
+:::
+
+::: {.column width="33%"}
+::: {.panel-card .card-magenta}
+[② Bring in AI · ~8 min]{.card-title}
+When I call it, use an AI tool. Where does it help? Where must
+[you]{.highlight-magenta} stay in charge? Mark what AI did against what
+you decided.
+:::
+:::
+
+::: {.column width="33%"}
+::: {.panel-card .card-amber}
+[③ A few groups share]{.card-title}
+One voice, about 30 seconds: your plan, and the one thing AI changed your
+mind about.
+:::
+:::
+
+::::
+
+::: {.closing-line}
+Remember the rule: the machine handles [perception]{.highlight-cyan}. You decide.
+:::
+
+:::
+
+## Class reference: typography {.smaller}
+
+`.header-label` [FUTURE SCIENCE × HKU SUMMER INSTITUTE]{.header-label}
+`.header-subtext` [A muted secondary line under a header block]{.header-subtext}
+`.section-label` [CYAN CHAPTER LABEL]{.section-label}
+`.section-label-gold` [GOLD VARIANT FOR DARK-IMAGE SLIDES]{.section-label-gold}
+`.big-title` [Display title for hero slides]{.big-title}
+`.slide-title` [Content-slide title]{.slide-title}
+`.subtitle` [A subtitle line under a display title]{.subtitle}
+`.pronunciation` — trails a title at small size: [The humble Gaussian [(say: GOW-see-an)]{.pronunciation}]{.slide-title}
+
+## Class reference: inline and body {.smaller}
+
+`.big-quote` [“A standalone spoken line, large and light.”]{.big-quote}
+
+`.body-text` with inline colour spans `.highlight-cyan` `.highlight-magenta` `.highlight-amber` `.accent`:
+
+::: {.body-text}
+Body text at reading size, with a [cyan emphasis]{.highlight-cyan}, a [magenta
+emphasis]{.highlight-magenta}, an [amber emphasis]{.highlight-amber} and an [accent word]{.accent}.
+:::
+
+`.author-name` and `.author-affiliation`:
+
+[Dr. Presenter Name]{.author-name}
+[Affiliation line in the muted credit style]{.author-affiliation}
+
+`.closing-line` centres a small final statement:
+
+::: {.closing-line}
+A closing line, centred, at footnote weight.
+:::
+
+`.narrow-text` pads the right side so prose keeps a narrow column.
+
+Layout components (the theme's marked structural exceptions):
+`.title-layout` with `.layout-top` / `.layout-middle` / `.layout-bottom` gives a
+title slide its three zones (top header, centred middle, bottom credit);
+`.spread` distributes a content slide's blocks evenly over the height
+below the title. Both size only their own children.
+
+## Class reference: cards {.smaller}
+
+`.quote-card` — tinted callout with a cyan accent edge:
+
+::: {.quote-card}
+Use for definitions and asides. Border, wash and padding only: no
+positioning.
+:::
+
+`.panel-card` with `.card-title`, tinted per column by `.card-cyan` `.card-magenta` `.card-green` `.card-amber`:
+
+:::: {.columns}
+::: {.column width="25%"}
+::: {.panel-card .card-cyan}
+[Cyan head]{.card-title}
+Card body text.
+:::
+:::
+::: {.column width="25%"}
+::: {.panel-card .card-magenta}
+[Magenta head]{.card-title}
+Card body text.
+:::
+:::
+::: {.column width="25%"}
+::: {.panel-card .card-green}
+[Green head]{.card-title}
+Card body text.
+:::
+:::
+::: {.column width="25%"}
+::: {.panel-card .card-amber}
+[Amber head]{.card-title}
+Card body text.
+:::
+:::
+::::

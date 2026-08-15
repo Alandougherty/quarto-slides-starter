@@ -1,0 +1,59 @@
+---
+title: "Deck Title"
+subtitle: "Subtitle"
+date: "Month Year"
+format:
+  revealjs:
+    theme: [default, themes/plain.scss]
+    # theme: [default, themes/plain.scss, themes/editing-guide.scss]   # dashed 16:9 canvas outline while editing
+    width: 1244      # 16:9 with height 700. Change BOTH or NEITHER: this pair
+    height: 700      # is the authored canvas; all content is laid out against it.
+    margin: 0.02     # viewport fraction kept empty around the deck (uniform only)
+    max-scale: 9.9   # unclamp scaling so large displays fill (default caps at 2x)
+    slide-number: true
+    # embed-resources: true   # turn on (or pass -M embed-resources:true)
+    #                         # for the DELIVERY render: one portable html
+    #                         # file, no *_files/ dependency. See README.
+    # footer: "Course or event name"
+    # NOTE: the footer is viewport chrome living in the margin zone. With
+    # margin below ~0.04, bottom-heavy slides can collide with it. Either
+    # keep margin >= 0.04 with a footer, or drop the footer.
+---
+
+## A content slide
+
+- Bullets are plain markdown
+- Add `{.smaller}` to a slide heading when content runs long
+
+## Two columns {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Left**
+
+- Column content
+:::
+
+::: {.column width="50%"}
+**Right**
+
+```python
+print("code blocks style via the theme")
+```
+:::
+
+::::
+
+## Images
+
+<!-- image.png is a placeholder path: replace it with a real file. -->
+![](image.png){width="90%"}
+
+<!--
+Decorative background animation: attach a self-contained CSS-animation
+page to a slide with {background-iframe="assets/animation.html"} — see
+the README section "Decorative background animation" and the working
+example in examples/keynote/. Reserve background-video for content
+footage.
+-->

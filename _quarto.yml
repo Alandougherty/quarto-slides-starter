@@ -1,0 +1,12 @@
+project:
+  title: "deck"
+  render:
+    # Only the starter deck; examples/ are separate self-contained projects.
+    - deck.qmd
+
+execute:
+  # Cache executed code results in _freeze/ so re-rendering needs no
+  # runtime. Freeze is honoured only by project renders (quarto render
+  # with no filename); naming the file re-executes. No-op until the
+  # deck contains executable code cells.
+  freeze: auto

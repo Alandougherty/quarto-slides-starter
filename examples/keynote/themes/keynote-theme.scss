@@ -1,0 +1,145 @@
+/*-- scss:defaults --*/
+// Dark keynote palette via documented Sass variables.
+
+$body-bg: #0b1026;
+$body-color: #aab4d4;
+$presentation-heading-color: #e8ecf4;
+$presentation-heading-font: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+$font-family-sans-serif: -apple-system, "Helvetica Neue", Arial, sans-serif;
+$link-color: #46d3ff;
+$code-color: #46d3ff;
+$presentation-font-size-root: 30px;
+
+/*-- scss:rules --*/
+// Boundary note: every rule below is TYPOGRAPHY-ONLY (size, weight,
+// colour, spacing, transform, line-height) or SIMPLE BOX styling on
+// authored divs (background, border, border-radius, padding). Nothing
+// positions, transforms, or restyles RevealJS internals. This is the
+// declared limit of the "plain" route.
+
+.section-label {
+  display: block;
+  font-size: 0.42em;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #46d3ff;
+  margin-bottom: 14px;
+}
+.section-label-gold {
+  display: block;
+  font-size: 0.42em;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #e0b653;
+  margin-bottom: 14px;
+}
+.closing-line {
+  display: block;
+  text-align: center;
+  font-size: 0.6em;
+  color: #c4ccea;
+  padding-top: 20px;
+}
+.header-label {
+  display: block;
+  font-size: 0.36em;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aab4d4;
+}
+.header-subtext   { display: block; font-size: 0.4em; color: #7a86b8; }
+.big-title  {
+  display: block;
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.7em;
+  line-height: 1.12;
+  color: #e8ecf4;
+}
+.subtitle { display: block; font-size: 0.62em; color: #aab4d4; margin-top: 14px; }
+.author-name    { display: block; font-size: 0.45em; color: #c4ccea; font-weight: 600; }
+.author-affiliation{ display: block; font-size: 0.4em;  color: #7a86b8; }
+.pronunciation       { font-size: 0.45em; font-weight: 400; font-style: normal; color: #7a86b8; }
+.accent    { color: #7d7ff2; }
+.highlight-cyan        { color: #46d3ff; font-weight: 700; }
+.highlight-magenta        { color: #c77dff; font-weight: 700; }
+.highlight-amber        { color: #f5c97b; font-weight: 700; }
+.big-quote { display: block; font-size: 1.15em; font-weight: 300; color: #e8ecf4; }
+.body-text   { font-size: 0.72em; line-height: 1.55; }
+.small     { font-size: 0.55em; }
+
+.quote-card {
+  background: rgba(70, 211, 255, 0.07);
+  border: 1px solid rgba(70, 211, 255, 0.18);
+  border-left: 4px solid #46d3ff;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.62em;
+  line-height: 1.5;
+  color: #c4ccea;
+}
+.panel-card {
+  background: rgba(157, 180, 255, 0.06);
+  border: 1px solid rgba(157, 180, 255, 0.15);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  font-size: 0.55em;
+  line-height: 1.45;
+}
+.card-title { display: block; font-weight: 700; color: #e8ecf4; font-size: 1.1em; margin-bottom: 4px; }
+
+.slide-title  {
+  display: block;
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.15em;
+  line-height: 1.15;
+  color: #e8ecf4;
+}
+.narrow-text   { padding-right: 26%; }
+.card-cyan .card-title { color: #46d3ff; }
+.card-green .card-title { color: #5ee0d4; }
+.card-magenta .card-title { color: #c77dff; }
+.card-amber .card-title { color: #f5c97b; }
+
+
+// ---------------------------------------------------------------------
+// STRUCTURAL EXCEPTION (deliberate, scoped): the hero three-zone layout.
+// A generalisable title-slide pattern: .layout-top pins to the top,
+// .layout-middle centres in the elastic remaining space, .layout-bottom sits
+// just above the footer. Flex is layout CSS, so this is outside the
+// typography-only rule; the exception is contained: it sizes only its
+// own children, its height matches the authored canvas, and it cannot
+// affect other slides, scaling, or print.
+.title-layout {
+  display: flex;
+  flex-direction: column;
+  height: 620px;   // authored canvas 700px minus heading line + margins
+}
+.layout-middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+// Same exception family: distribute a content slide's blocks evenly over
+// the height remaining below the title. Generalises to any content; no
+// fixed spacers needed.
+.spread {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 520px;   // canvas 700px minus heading zone; tune with canvas
+}
+// .fill-space marks the block that absorbs the elastic height inside .spread
+// (e.g. a card row of tall panels that should fill the slide). Cards
+// inside a grown row stretch to the row's height.
+.fill-space { flex: 1; }
+.fill-space .column { height: 100%; }
+.fill-space .panel-card { height: calc(100% - 14px); }

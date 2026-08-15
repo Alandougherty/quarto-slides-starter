@@ -1,0 +1,8 @@
+/*-- scss:defaults --*/
+/*-- scss:rules --*/
+// EDITING AID ONLY — remove from the qmd theme list before delivery/export.
+// Traces the true canvas edge. `outline` is layout-inert: it cannot affect
+// layout, scaling, or print flow.
+.reveal .slides {
+  outline: 2px dashed #8c8fa1;
+}

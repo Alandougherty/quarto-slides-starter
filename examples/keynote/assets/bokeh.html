@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden;
+    background: radial-gradient(120% 120% at 72% 16%, #16244f 0%, #0b1026 60%, #070b1a 100%); }
+  @keyframes floatA { 0%,100% { transform: translate(0,0) } 33% { transform: translate(22px,-26px) } 66% { transform: translate(-16px,14px) } }
+  @keyframes floatB { 0%,100% { transform: translate(0,0) } 50% { transform: translate(-28px,20px) } }
+  @keyframes floatC { 0%,100% { transform: translate(0,0) } 25% { transform: translate(14px,22px) } 75% { transform: translate(-20px,-12px) } }
+  @keyframes pulse  { 0%,100% { opacity:.16; transform: scale(.88) } 50% { opacity:.55; transform: scale(1.2) } }
+  @keyframes pulseB { 0%,100% { opacity:.10; transform: scale(.8) }  50% { opacity:.7;  transform: scale(1.3) } }
+  .f { position: absolute; inset: 0; pointer-events: none; }
+  .f span { position: absolute; display: block; will-change: transform; }
+  .f span > i { display: block; border-radius: 50%; filter: blur(13px);
+    mix-blend-mode: screen; will-change: transform, opacity; }
+  @media (prefers-reduced-motion: reduce) { .f span, .f span > i { animation: none !important } }
+</style>
+</head>
+<body>
+<div class="f" aria-hidden="true">
+  <span style="left:66%;top:12%;animation:floatA 18s ease-in-out -1s infinite"><i style="width:240px;height:240px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulse 7s ease-in-out -0.5s infinite"></i></span>
+  <span style="left:84%;top:34%;animation:floatB 22s ease-in-out -3s infinite"><i style="width:195px;height:195px;background:radial-gradient(circle at 42% 40%,#c77dff,rgba(199,125,255,0) 70%);animation:pulseB 8.5s ease-in-out -2s infinite"></i></span>
+  <span style="left:74%;top:62%;animation:floatC 16s ease-in-out -5s infinite"><i style="width:165px;height:165px;background:radial-gradient(circle at 42% 40%,#5ee0d4,rgba(94,224,212,0) 70%);animation:pulse 6.5s ease-in-out -1.5s infinite"></i></span>
+  <span style="left:90%;top:78%;animation:floatA 20s ease-in-out -2s infinite"><i style="width:135px;height:135px;background:radial-gradient(circle at 42% 40%,#6bdcff,rgba(107,220,255,0) 70%);animation:pulseB 9s ease-in-out -4s infinite"></i></span>
+  <span style="left:58%;top:80%;animation:floatB 19s ease-in-out -6s infinite"><i style="width:150px;height:150px;background:radial-gradient(circle at 42% 40%,#9db4ff,rgba(157,180,255,0) 70%);animation:pulse 7.5s ease-in-out -3s infinite"></i></span>
+  <span style="left:52%;top:28%;animation:floatC 14s ease-in-out -2s infinite"><i style="width:96px;height:96px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulseB 6s ease-in-out -1s infinite"></i></span>
+  <span style="left:96%;top:8%;animation:floatA 17s ease-in-out -7s infinite"><i style="width:105px;height:105px;background:radial-gradient(circle at 42% 40%,#c77dff,rgba(199,125,255,0) 70%);animation:pulse 8s ease-in-out -2.5s infinite"></i></span>
+  <span style="left:80%;top:92%;animation:floatB 21s ease-in-out -4s infinite"><i style="width:120px;height:120px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulseB 7s ease-in-out -0.5s infinite"></i></span>
+  <span style="left:68%;top:44%;animation:floatA 23s ease-in-out -8s infinite"><i style="width:180px;height:180px;background:radial-gradient(circle at 42% 40%,#6bdcff,rgba(107,220,255,0) 70%);animation:pulseB 9.5s ease-in-out -5s infinite"></i></span>
+  <span style="left:88%;top:54%;animation:floatB 16s ease-in-out -1.5s infinite"><i style="width:87px;height:87px;background:radial-gradient(circle at 42% 40%,#9db4ff,rgba(157,180,255,0) 70%);animation:pulse 7s ease-in-out -2s infinite"></i></span>
+  <span style="left:60%;top:6%;animation:floatC 18s ease-in-out -6s infinite"><i style="width:108px;height:108px;background:radial-gradient(circle at 42% 40%,#5ee0d4,rgba(94,224,212,0) 70%);animation:pulseB 8s ease-in-out -3.5s infinite"></i></span>
+  <span style="left:50%;top:92%;animation:floatA 19s ease-in-out -2.5s infinite"><i style="width:84px;height:84px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulse 6.5s ease-in-out -1s infinite"></i></span>
+  <span style="left:98%;top:38%;animation:floatB 20s ease-in-out -5s infinite"><i style="width:135px;height:135px;background:radial-gradient(circle at 42% 40%,#c77dff,rgba(199,125,255,0) 70%);animation:pulseB 8.5s ease-in-out -4.5s infinite"></i></span>
+  <span style="left:8%;top:14%;animation:floatB 19s ease-in-out -2s infinite"><i style="width:135px;height:135px;background:radial-gradient(circle at 42% 40%,#5ee0d4,rgba(94,224,212,0) 70%);animation:pulseB 8s ease-in-out -1s infinite"></i></span>
+  <span style="left:16%;top:86%;animation:floatA 21s ease-in-out -4s infinite"><i style="width:120px;height:120px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulse 7s ease-in-out -3s infinite"></i></span>
+  <span style="left:30%;top:20%;animation:floatC 17s ease-in-out -5s infinite"><i style="width:84px;height:84px;background:radial-gradient(circle at 42% 40%,#9db4ff,rgba(157,180,255,0) 70%);animation:pulseB 6.5s ease-in-out -2s infinite"></i></span>
+  <span style="left:42%;top:90%;animation:floatB 18s ease-in-out -6s infinite"><i style="width:96px;height:96px;background:radial-gradient(circle at 42% 40%,#6bdcff,rgba(107,220,255,0) 70%);animation:pulse 7.5s ease-in-out -1.5s infinite"></i></span>
+  <span style="left:5%;top:74%;animation:floatC 16s ease-in-out -3s infinite"><i style="width:72px;height:72px;background:radial-gradient(circle at 42% 40%,#46d3ff,rgba(70,211,255,0) 70%);animation:pulseB 6s ease-in-out -4s infinite"></i></span>
+</div>
+</body>
+</html>
